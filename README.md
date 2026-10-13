@@ -7,3 +7,5 @@ try to train a GCN model by hand-writing code
 - 'evaluation.py' :使用5折随机验证
 - 'BDI_scores.csv' :BDI问卷得分数据集
 - 'README.md' :项目说明文档
+## 当下漏洞
+- 采用KNN方法，由于测试集的88人与测试集的22人存在edge_index的索引关联导致数据泄露

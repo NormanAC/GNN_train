@@ -7,6 +7,8 @@ import random
 import torch.nn.functional as F
 from torch_geometric.nn import GCNConv
 import torch
+from sklearn.neighbors import kneighbors_graph
+from torch_geometric.data import Data
 
 seed=42
 torch.manual_seed(seed)
@@ -31,8 +33,7 @@ print(f'x的形状:{x.shape},类型:{x.dtype}')
 print(f'y的形状:{y.shape},类型:{y.dtype}')
 
 #图形化
-from sklearn.neighbors import kneighbors_graph
-from torch_geometric.data import Data
+
 k=5
 adj_matrix =kneighbors_graph(x_array,n_neighbors=k,mode='connectivity',include_self=False)
 adj_coo=adj_matrix.tocoo()
@@ -63,7 +64,7 @@ class GCN(torch.nn.Module):
         x=self.conv2(x,edge_index)
         return x
 
-#实例化模型
+#定义和训练评估函数
 def train_and_evaluate(model,data,train_mask,test_mask):
     optimizer =torch.optim.Adam(model.parameters(),lr=0.01,weight_decay=5e-4)
     criterion =torch.nn.CrossEntropyLoss()
